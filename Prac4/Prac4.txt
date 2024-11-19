@@ -1,0 +1,21 @@
+def bubble_sort(arr, ascending=True):
+    
+    n = len(arr)
+    for i in range(n - 1):
+        for j in range(n - i - 1):
+            if (ascending and arr[j] > arr[j + 1]) or (not ascending and arr[j] < arr[j + 1]):
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+
+example_list_asc = [64, 34, 25, 12, 22, 11, 90]
+example_list_desc = [64, 34, 25, 12, 22, 11, 90]
+
+
+sorted_asc = bubble_sort(example_list_asc, ascending=True)
+sorted_desc = bubble_sort(example_list_desc, ascending=False)
+
+print("Сортування за зростанням:", sorted_asc)
+print("Сортування за спаданням:", sorted_desc)
+
+

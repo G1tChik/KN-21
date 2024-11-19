@@ -1,0 +1,81 @@
+class Marshrut:
+    def __init__(self, start, finish, *lengths):
+        self.start = start
+        self.finish = finish
+        self.lengths = list(lengths)
+
+    def __str__(self):
+        return f"Маршрут {self.start} -> {self.finish}, Протяжність: {self.get_total_length()} км, Привали: {self.get_num_stops()}"
+
+    def get_total_length(self):
+        return sum(self.lengths)
+
+    def get_num_stops(self):
+        return len(self.lengths) - 1
+
+    def get_longest_segment(self):
+        return max(self.lengths)
+
+    def __lt__(self, other):
+        return self.get_total_length() < other.get_total_length()
+
+    def __le__(self, other):
+        return self.get_total_length() <= other.get_total_length()
+
+    def __gt__(self, other):
+        return self.get_total_length() > other.get_total_length()
+
+    def __ge__(self, other):
+        return self.get_total_length() >= other.get_total_length()
+
+    def __eq__(self, other):
+        return self.get_total_length() == other.get_total_length()
+
+    def __ne__(self, other):
+        return self.get_total_length() != other.get_total_length()
+
+# Створення списку маршрутів
+routes = [
+    Marshrut("Кваси", "Дземброня", 8, 8, 12, 18, 12),
+    Marshrut("Львів", "Київ", 20, 30, 40, 50),
+    Marshrut("Одеса", "Харків", 10, 15, 25, 35, 45),
+    Marshrut("Ужгород", "Чернівці", 5, 10, 15, 20),
+    Marshrut("Київ", "Харків", 10, 20, 30, 40),
+    Marshrut("Львів", "Одеса", 15, 15, 20, 25, 30),
+    Marshrut("Київ", "Львів", 10, 20, 10, 5),
+    Marshrut("Харків", "Дніпро", 15, 25, 35, 45),
+    Marshrut("Одеса", "Київ", 12, 22, 32, 42),
+    Marshrut("Київ", "Одеса", 13, 23, 33, 43)
+]
+
+# Сортування за протяжністю
+routes.sort()
+
+# Виведення маршрутів
+for route in routes:
+    print(route)
+
+# Функції для виведення маршрутів за різними критеріями
+def routes_with_max_stops(routes):
+    max_stops = max(route.get_num_stops() for route in routes)
+    return [route for route in routes if route.get_num_stops() == max_stops]
+
+def routes_with_longest_segment(routes):
+    longest_segment = max(route.get_longest_segment() for route in routes)
+    return [route for route in routes if route.get_longest_segment() == longest_segment]
+
+def routes_starting_ending_at(routes, point):
+    return [route for route in routes if route.start == point or route.finish == point]
+
+# Приклади використання функцій
+print("\nМаршрути з максимальною кількістю привалів:")
+for route in routes_with_max_stops(routes):
+    print(route)
+
+print("\nМаршрути з найдовшим переходом:")
+for route in routes_with_longest_segment(routes):
+    print(route)
+
+print("\nМаршрути з початком або кінцем у Києві:")
+for route in routes_starting_ending_at(routes, "Київ"):
+    print(route)
